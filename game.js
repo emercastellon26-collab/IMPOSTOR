@@ -1,5 +1,4 @@
 (() => {
-  (() => {
   const $ = (sel) => document.querySelector(sel);
 
   const state = {
@@ -67,28 +66,24 @@
     actions.appendChild(btn);
   }
 
-  // Asignación de roles (El Colado / Ciudadano)
+  // Asignación de roles
   function assignRoles(){
     const shuffled = [...state.players].sort(()=>Math.random()-0.5);
     const roles = {};
     shuffled.slice(0,state.impostorsCount).forEach(n=>roles[n]='El Colado');
     state.players.forEach(n=>{
-      if(!roles[n]) roles[n]= SecretWord;
+      if(!roles[n]) roles[n]='Ciudadano';
     });
     state.roles = roles;
   }
 
-  // Selección de palabra secreta (solo interna, no se muestra)
+  // Selección de palabra secreta (solo interna)
   function pickSecretWord(){
     const list = CONFIG.categories[state.category] || [];
-    if(list.length === 0){
-      state.word = null;
-      return;
-    }
-    state.word = list[Math.floor(Math.random() * list.length)];
+    state.word = list.length ? list[Math.floor(Math.random() * list.length)] : null;
   }
 
-  // Mostrar roles sin revelar palabra a ciudadanos
+  // Mostrar roles (ciudadanos ven palabra, colado solo su rol)
   function showRolesWithButton(){
     const display = $('#role-display');
     const timerBox = $('#role-timer');
@@ -114,7 +109,12 @@
     btnShow.onclick = ()=>{
       const name = state.players[index];
       const role = state.roles[name];
-      const text = role === 'El Colado' ? 'Eres EL COLADO' : 'Eres CIUDADANO';
+      let text = '';
+      if(role === 'El Colado'){
+        text = 'Eres EL COLADO';
+      } else {
+        text = `Tu palabra es: ${state.word}`;
+      }
       display.innerHTML = `<p><strong>${name}</strong> → ${text}</p>`;
       btnShow.disabled = true;
       btnShow.style.display = 'none';
@@ -175,7 +175,7 @@
     showNextPlayer();
   }
 
-  // Votación secuencial con Pausar/Reanudar
+  // Votación secuencial
   function setupVotingSequential(){
     const area = $('#vote-area');
     const timerBox = $('#vote-timer');
@@ -250,7 +250,7 @@
     showNextVoter();
   }
 
-  // Resolver votos y mostrar resultado
+  // Resolver votos
   function resolveVotes(){
     const summary = $('#result-summary');
     const entries = Object.entries(state._votes || {});
@@ -266,6 +266,7 @@
     summary.innerHTML = `
       <p>Jugador más votado: <strong>${winner}</strong> (${max} votos)</p>
       <p>Su rol era: <strong>${role}</strong></p>
+      <p>Palabra jugada: <strong>${state.word}</strong></p>
     `;
   }
 
@@ -425,8 +426,5 @@ function mostrarRol(jugador) {
   setTimeout(() => {
     document.getElementById("btn-continue-to-hints").style.display = "block";
   }, 2000);
-}
-
-
 }
 
