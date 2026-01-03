@@ -1,4 +1,5 @@
 (() => {
+  (() => {
   const $ = (sel) => document.querySelector(sel);
 
   const state = {
@@ -72,7 +73,7 @@
     const roles = {};
     shuffled.slice(0,state.impostorsCount).forEach(n=>roles[n]='El Colado');
     state.players.forEach(n=>{
-      if(!roles[n]) roles[n]='Ciudadano';
+      if(!roles[n]) roles[n]= SecretWord;
     });
     state.roles = roles;
   }
@@ -424,5 +425,8 @@ function mostrarRol(jugador) {
   setTimeout(() => {
     document.getElementById("btn-continue-to-hints").style.display = "block";
   }, 2000);
+}
+
+
 }
 
