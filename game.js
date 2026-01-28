@@ -72,7 +72,7 @@
     const roles = {};
     shuffled.slice(0,state.impostorsCount).forEach(n=>roles[n]='El Colado');
     state.players.forEach(n=>{
-      if(!roles[n]) roles[n]='Ciudadano';
+      if(!roles[n]) roles[n]='NO COLADO';
     });
     state.roles = roles;
   }
@@ -111,7 +111,7 @@
       const role = state.roles[name];
       let text = '';
       if(role === 'El Colado'){
-        text = 'Eres EL COLADO';
+        text = 'Eres EL COLADO O IMPOSTOR';
       } else {
         text = `Tu palabra es: ${state.word}`;
       }
@@ -146,7 +146,7 @@
     function showNextPlayer(){
       if(index < state.players.length){
         const name = state.players[index];
-        $('#say-word-display').innerHTML = `<p>Es turno de <strong>${name}</strong> para dar su pista.</p>`;
+        $('#say-word-display').innerHTML = `<p>Es turno de <strong>${name}</strong> para dar su palabra.</p>`;
         let timeLeft = 10;
         $('#say-word-timer').textContent = `Tiempo restante: ${timeLeft}s`;
 
