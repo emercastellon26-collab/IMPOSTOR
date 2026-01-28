@@ -3,7 +3,7 @@ const CONFIG = {
   categories: {
     Jerga: [
       'Chavalo','Tuani','Chunche','Puchica','Guaro',
-      'Fritanga','Chavala','Jodido','Qué tuanis'
+      'Fritanga','Chavala','Jodido','Qué tuani'
     ],
     Personajes: [
       'Rubén Darío','Augusto C. Sandino','Carlos Fonseca Amador',
@@ -30,7 +30,7 @@ const CONFIG = {
     impostors: 1,
     hintSeconds: 20,
     voteSeconds: 30,
-    revealWordOnResult: false // 🔒 palabra oculta para más misterio
+    revealWordOnResult: false //  palabra oculta para más misterio
   },
 
   scoring: {
